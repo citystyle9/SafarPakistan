@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-urdu: "Noto Nastaliq Urdu", serif;
+  
+  --color-emerald-950: #022c22;
+  --color-pak-green: #005c30;
+  --color-pak-dark: #002c17;
+  --color-pak-light: #f4f6f4;
+  --color-pak-gold: #c5a85c;
+  --color-pak-ivory: #fcfbf7;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-pak-ivory);
+    color: #1c2e24;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom class for Urdu text layout to prevent clipping on Nastaliq line heights */
+.urdu-text {
+  font-family: "Noto Nastaliq Urdu", "Noto Sans Arabic", "Playfair Display", serif;
+  line-height: 2.8;
+  direction: rtl;
+}
+
+/* Smooth custom scrolls */
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #005c30;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #002c17;
+}
