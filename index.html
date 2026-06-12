@@ -3,11 +3,719 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <title>Safar-e-Pakistan | Discover Pakistan Tourism Portal</title>
+    <!-- Google Fonts Imports: Playfair Display, Plus Jakarta Sans, Noto Nastaliq Urdu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons Library (via CDN link) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Play CDN for Vanilla HTML -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'pak-green': '#005c30',
+              'pak-dark': '#002c17',
+              'pak-light': '#f4f6f4',
+              'pak-gold': '#c5a85c',
+              'pak-ivory': '#fcfbf7',
+              emerald: {
+                950: '#022c22'
+              }
+            },
+            fontFamily: {
+              sans: ["'Plus Jakarta Sans'", "sans-serif"],
+              serif: ["'Playfair Display'", "serif"],
+              urdu: ["'Noto Nastaliq Urdu'", "serif"]
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Custom stylesheet connection -->
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-pak-ivory text-[#1c2e24] antialiased selection:bg-pak-green selection:text-pak-gold overflow-x-hidden">
+
+    <!-- HERO HEADER SECTION -->
+    <header class="relative min-h-screen flex flex-col justify-between overflow-hidden text-white" id="home">
+      <!-- Background slider overlay with real loaded high resolution landscape assets -->
+      <div class="absolute inset-0 z-0">
+        <img
+          src="/src/assets/images/pakistan_hero_hunza_1781247088392.jpg"
+          id="hero-bg"
+          alt="Hunza Valley landscape peak"
+          class="w-full h-full object-cover object-center scale-102 transition-all duration-[1500ms]"
+          referrerPolicy="no-referrer"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-emerald-950/45 to-[#fcfbf7]" />
+      </div>
+
+      <!-- Live Floating Navbar -->
+      <nav class="relative z-10 w-full px-6 py-5 md:px-12 flex justify-between items-center backdrop-blur-xs bg-black/15 border-b border-white/5">
+        <div class="flex items-center space-x-3 select-none">
+          <div class="bg-emerald-800 p-2 rounded-full border border-emerald-600/80 shadow-inner">
+            <i data-lucide="compass" class="w-6 h-6 text-pak-gold animate-spin-slow"></i>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold tracking-tight font-serif text-white flex items-center gap-1.5">
+              Safar-e-Pakistan <span class="text-pak-gold font-normal">|</span> <span class="text-emerald-300 font-urdu text-[11px] leading-none pt-1">سفرِ پاکستان</span>
+            </h1>
+            <p class="text-[9px] text-gray-300 tracking-widest font-mono uppercase">Interactive Tourism Matrix</p>
+          </div>
+        </div>
+
+        <!-- Dynamic Language switcher tabs -->
+        <div class="flex items-center space-x-1.5 bg-black/50 border border-white/20 p-1.5 rounded-full shadow-lg">
+          <button
+            onclick="changeLanguage('en')"
+            id="lang-btn-en"
+            class="px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all bg-pak-green text-white shadow-md"
+          >
+            English
+          </button>
+          <button
+            onclick="changeLanguage('both')"
+            id="lang-btn-both"
+            class="px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all text-gray-300 hover:text-white"
+          >
+            Bilingual (دونوں)
+          </button>
+          <button
+            onclick="changeLanguage('ur')"
+            id="lang-btn-ur"
+            class="px-3.5 py-0.5 rounded-full text-sm font-urdu transition-all text-gray-300 hover:text-white leading-normal"
+          >
+            اردو
+          </button>
+        </div>
+      </nav>
+
+      <!-- Centered Slogans & Badges -->
+      <main class="relative z-10 flex-grow flex items-center justify-center px-6 max-w-5xl mx-auto py-12 text-center">
+        <div class="space-y-8">
+          <!-- Live Badge tag line -->
+          <div class="inline-flex items-center space-x-2 bg-emerald-950/60 border border-emerald-600/60 px-4 py-1.5 rounded-full">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pak-gold"></i>
+            <span class="text-[10px] uppercase font-bold font-mono tracking-widest text-[#fcfbf7]">
+              Premium GitHub Pages Showcase • Live Applet
+            </span>
+          </div>
+
+          <!-- Bilingual headers -->
+          <div class="space-y-4">
+            <h2 id="hero-title-en" class="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight leading-none text-white drop-shadow-md">
+              The Land of <span class="text-pak-gold font-normal font-serif">Breathtaking</span> Landscapes
+            </h2>
+            <h2 id="hero-title-ur" class="text-3xl sm:text-5xl md:text-6xl font-urdu text-pak-gold drop-shadow-sm pr-1 leading-normal hidden">
+              فلک بوس پہاڑوں اور بے مثال تاریخ کی سرزمین
+            </h2>
+          </div>
+
+          <!-- Bilingual description lines -->
+          <div class="max-w-3xl mx-auto">
+            <p id="hero-desc-en" class="text-sm sm:text-base md:text-lg text-gray-200 font-light leading-relaxed drop-shadow-sm">
+              From the towering frozen giants of the Karakoram ranges and legendary silk road passes, to the spiritual architecture crowns of Lahore and golden desert shorelines—Pakistan is an unexplored marvel waiting for your steps.
+            </p>
+            <p id="hero-desc-ur" class="urdu-text text-lg sm:text-xl text-emerald-100/90 leading-loose max-w-2xl mx-auto drop-shadow-sm hidden">
+              قراقرم کے عظیم الشان برف پوش میدانوں اور لافانی شاہراہِ ریشم سے لیکر، مغل فن تعمیر کی امین مساجد اور پُر وقار صحرائی ساحلوں تک۔ پاکستان ایک انوکھا ملک ہے جو سیاحوں کا دلی استقبال کرتا ہے۔
+            </p>
+          </div>
+
+          <!-- Quick statistics card bar -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto bg-black/40 border border-white/10 p-4 md:p-6 rounded-2xl backdrop-blur-md shadow-2xl">
+            <div class="text-center md:border-r border-white/15 p-2">
+              <h4 class="text-2xl md:text-3.5xl font-bold text-pak-gold font-serif">5 / 14</h4>
+              <p class="text-[9px] uppercase font-mono tracking-widest text-emerald-200 mt-1">8000m+ Frozen Peaks</p>
+            </div>
+            <div class="text-center md:border-r border-white/15 p-2">
+              <h4 class="text-2xl md:text-3.5xl font-bold text-pak-gold font-serif">5000+</h4>
+              <p class="text-[9px] uppercase font-mono tracking-widest text-emerald-200 mt-1">Years of Historic Heritage</p>
+            </div>
+            <div class="text-center md:border-r border-white/15 p-2">
+              <h4 class="text-2xl md:text-3.5xl font-bold text-pak-gold font-serif">04</h4>
+              <p class="text-[9px] uppercase font-mono tracking-widest text-emerald-200 mt-1">Unique Climatic Seasons</p>
+            </div>
+            <div class="text-center p-2">
+              <h4 class="text-2xl md:text-3.5xl font-bold text-pak-gold font-serif">#1</h4>
+              <p class="text-[9px] uppercase font-mono tracking-widest text-emerald-200 mt-1">Best Travel Hospitality</p>
+            </div>
+          </div>
+
+          <!-- CTAs Navigation Links -->
+          <div class="flex flex-wrap justify-center gap-4 pt-2">
+            <a
+              href="#places"
+              class="bg-pak-green hover:bg-pak-dark text-white px-7 py-3 rounded-full font-semibold transition-all shadow-md hover:scale-105 border border-emerald-500 flex items-center space-x-2"
+            >
+              <i data-lucide="map-pin" class="w-4 h-4 text-pak-gold"></i>
+              <span class="text-sm">Explore Places</span>
+              <span class="font-urdu text-[10px] opacity-80 pl-1 leading-none">| مقامات</span>
+            </a>
+            <a
+              href="#history"
+              class="bg-white/10 hover:bg-white/20 text-[#fcfbf7] hover:text-white px-7 py-3 rounded-full font-semibold transition-all border border-white/20 hover:scale-105 flex items-center space-x-2"
+            >
+              <span class="text-sm">Historical Timeline</span>
+              <span class="font-urdu text-[10px] opacity-80 pl-1 leading-none">| تاریخ</span>
+            </a>
+            <a
+              href="#planner"
+              class="bg-pak-gold hover:bg-[#b09650] text-emerald-950 px-7 py-3 rounded-full font-bold transition-all hover:scale-105 flex items-center space-x-2 shadow-lg"
+            >
+              <span class="text-sm">Virtual Planner</span>
+              <span class="font-urdu text-[10px] opacity-95 pl-1 leading-none">| سفر نامہ</span>
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Scroll direction -->
+      <footer class="relative z-10 text-center pb-8 pt-4">
+        <div class="text-xs text-gray-400 font-mono tracking-widest uppercase flex flex-col items-center select-none">
+          <span>Scroll down to travel</span>
+          <div class="w-1 h-3.5 bg-pak-gold rounded-full mt-2 animate-bounce" />
+        </div>
+      </footer>
+    </header>
+
+
+    <!-- FAMOUS DESTINATIONS PORTFOLIO & FILTER GRID -->
+    <section class="bg-pak-light py-24 px-6 md:px-12" id="places">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Section title and search bar -->
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-14 gap-6">
+          <div class="max-w-2xl space-y-3">
+            <span class="inline-flex items-center space-x-1.5 bg-emerald-100 text-pak-green px-3.5 py-1 rounded-full text-xs font-bold font-mono uppercase tracking-wider">
+              <i data-lucide="compass" class="w-3.5 h-3.5 text-pak-gold animate-spin-slow"></i>
+              <span>Interactive Portfolio Matrix</span>
+            </span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-tight">
+              Famous Tourist <span class="text-pak-green font-normal italic">Destinations</span>
+            </h2>
+            <h3 id="places-title-ur" class="text-2xl font-urdu text-pak-gold pr-1 leading-normal hidden">
+              پاکستان کے سب سے مشہور تفریحی اور حسین مقامات
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-500 font-light">
+              From the crystal glazes of Attabad Lake to the architectural red arches of Lahore Fort, choose your dream destination below.
+            </p>
+          </div>
+
+          <!-- Interactive Search Box -->
+          <div class="relative w-full md:w-80 border-b border-emerald-900/10">
+            <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-850"></i>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search by name, province, or keywords..."
+              class="w-full pl-10 pr-4 py-2.5 bg-white border border-emerald-950/10 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-pak-green transition-all shadow-3xs"
+              oninput="filterTouristPlaces()"
+            />
+          </div>
+        </div>
+
+        <!-- Scrollable Region Filter Bar -->
+        <div class="flex flex-wrap gap-2 mb-10 overflow-x-auto pb-2 scrollbar-none" id="region-filters">
+          <!-- Populated dynamically via script.js -->
+        </div>
+
+        <!-- Places Grid layout -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="places-grid">
+          <!-- Loaded dynamically via script.js cards data -->
+        </div>
+
+        <!-- No Item Found fallback alert container -->
+        <div id="no-places-fallback" class="hidden text-center py-16 bg-white rounded-3xl border border-emerald-950/5 max-w-md mx-auto shadow-3xs">
+          <i data-lucide="alert-triangle" class="w-12 h-12 text-amber-500 mx-auto mb-4"></i>
+          <h4 class="text-base font-bold font-serif text-gray-900">No Spot Matches Found</h4>
+          <p class="text-xs text-gray-400 mt-1 max-w-xs mx-auto">
+            We couldn't locate any matching spot for your keyword. Try entering "Highlands", "Mosque", or "Sidi" instead.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- HISTORICAL TIMELINE SKELETON SECTION -->
+    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto" id="history">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="inline-flex items-center space-x-2 bg-emerald-50 text-pak-green border border-emerald-250 px-3.5 py-1 rounded-full text-xs font-bold font-mono tracking-wider">
+          <i data-lucide="calendar" class="w-3.5 h-3.5 text-pak-green"></i>
+          <span>CHRONICLE OF FIVE MILLENNIA SPIRITS</span>
+        </span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-tight">
+          A Glimpse Into <span class="text-pak-green font-normal italic">Ancient Pages</span>
+        </h2>
+        <h3 id="history-title-ur" class="text-2xl sm:text-3xl font-urdu text-pak-gold pr-1 leading-normal hidden">
+          ہماری شاندار تاریخ اور عظیم جدوجہد کے ابواب
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-500 font-light leading-relaxed">
+          Traverse chronological milestones of Indus planning, Gandhara art development, imperial Mughal grandeur, and modern sovereignty.
+        </p>
+      </div>
+
+      <!-- Chronological Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-16 bg-emerald-950/5 p-1.5 rounded-full max-w-xl mx-auto border border-emerald-950/10" id="era-filters">
+        <!-- Built dynamically from script.js -->
+      </div>
+
+      <!-- Core timeline nodes wrapper line -->
+      <div class="relative border-l-2 border-emerald-100 ml-4 md:ml-1/2 md:-translate-x-[1px] space-y-12 pb-8 overflow-hidden" id="timeline-container">
+        <!-- Rendered dynamically by script.js with slide entrance animation classes -->
+      </div>
+    </section>
+
+
+    <!-- INTERACTIVE VIRTUAL TRIP PLANNER -->
+    <section class="py-24 bg-pak-light px-6 md:px-12 border-t border-b border-emerald-950/5" id="planner">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Title Block text -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <span class="inline-flex items-center space-x-1.5 bg-pak-gold/15 text-[#91712a] border border-pak-gold/30 px-3.5 py-1 rounded-full text-xs font-bold font-mono tracking-wider">
+            <i data-lucide="map" class="w-3.5 h-3.5"></i>
+            <span>VIRTUAL EXPLORATION TRACKER</span>
+          </span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-tight">
+            Journey <span class="text-pak-green font-normal italic">Roadbooks & Planners</span>
+          </h2>
+          <h3 id="planner-title-ur" class="text-2xl sm:text-3xl font-urdu text-pak-gold leading-normal hidden">
+            طبیعی تفریحی راستوں کا تفصیلی سفر نامہ
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-500 font-light leading-relaxed">
+            Choose a curated travel theme itinerary and navigate across day-by-day routes, scenic checkpoint activities, and photogenic targets.
+          </p>
+        </div>
+
+        <!-- Itinerary Tab Selector Boxes -->
+        <div class="flex flex-col md:flex-row gap-4 mb-12 max-w-3xl mx-auto" id="itinerary-tabs">
+          <!-- Loaded dynamically from script.js -->
+        </div>
+
+        <!-- Active plan display module boards -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white border border-emerald-950/5 p-6 md:p-10 rounded-3xl shadow-3xs" id="planner-board">
+          
+          <!-- Days listing (Left side - Col 4) -->
+          <div class="lg:col-span-4 space-y-3 border-b lg:border-b-0 lg:border-r border-emerald-50 pb-6 lg:pb-0 lg:pr-8 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-2 scrollbar-none select-none" id="day-selector-rail">
+            <!-- Day tabs loaded dynamically -->
+          </div>
+
+          <!-- Active day plan contents descriptor (Right side - Col 8) -->
+          <div class="lg:col-span-8 flex flex-col justify-between" id="active-day-content">
+            <!-- Populated dynamically and smoothly via helper functions in script.js -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CULTURAL CORRIDOR (GASTRONOMY & LANGUAGE PHRASES) -->
+    <section class="py-24 px-6 md:px-12 border-b border-emerald-950/5" id="culture">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Headers -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <span class="inline-flex items-center space-x-2 bg-emerald-50 text-pak-green border border-emerald-250 px-3.5 py-1 rounded-full text-xs font-bold font-mono tracking-wider">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-red-500 fill-red-500 animate-pulse"></i>
+            <span>LEGENDARY SYSTEM OF MEHMAN-NAWAZI</span>
+          </span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-tight">
+            The Soul of Pakistan: <span class="text-pak-green font-normal italic">Food & Tongue</span>
+          </h2>
+          <h3 id="culture-title-ur" class="text-2xl sm:text-3xl font-urdu text-pak-gold leading-normal hidden">
+            پاکستانی روایات، دیسی مصالحے اور میٹھی بولیاں
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-500 font-light">
+            Indulge in slow-cooked gourmet cuisines and flip our vocabulary flashcards to connect with native communities globally.
+          </p>
+        </div>
+
+        <!-- Mode Toggle Segment button -->
+        <div class="flex justify-center gap-3 mb-12">
+          <button
+            onclick="switchCultureMode('food')"
+            id="culture-btn-food"
+            class="px-6 py-3 rounded-full text-xs font-bold flex items-center gap-2 transition-all bg-pak-green text-white shadow-md border border-transparent shadow-emerald-950/20"
+          >
+            <i data-lucide="coffee" class="w-4 h-4 text-pak-gold"></i>
+            <span>Gourmet Savor Cards</span>
+            <span class="font-urdu text-[11px] leading-none opacity-85">| پکوان</span>
+          </button>
+          
+          <button
+            onclick="switchCultureMode('language')"
+            id="culture-btn-language"
+            class="px-6 py-3 rounded-full text-xs font-bold flex items-center gap-2 transition-all bg-white text-gray-650 border border-emerald-950/5 hover:bg-emerald-50"
+          >
+            <i data-lucide="languages" class="w-4 h-4 text-pak-gold"></i>
+            <span>Interactive Language Coach</span>
+            <span class="font-urdu text-[11px] leading-none opacity-85">| بول چال</span>
+          </button>
+        </div>
+
+        <!-- Core dynamic container grids -->
+        <div id="culture-grid-container" class="min-h-64">
+          <!-- Populated from script.js based on selected tab mode -->
+        </div>
+
+        <!-- Custom helpful Travel Tip Banner -->
+        <div class="mt-12 text-center bg-white border border-emerald-950/5 p-5 rounded-2xl max-w-2xl mx-auto flex items-center justify-center gap-4 shadow-3xs hover:border-pak-gold/30 transition-all">
+          <i data-lucide="milestone" class="w-6 h-6 text-pak-gold shrink-0 animate-bounce"></i>
+          <p class="text-xs text-left text-gray-500 leading-relaxed font-light">
+            <strong class="text-gray-900 font-medium">Explorer Tip:</strong> Meeting locals with a traditional hand-to-chest gesture combined with a hearty <span class="text-pak-green font-bold">"Assalam-o-Alaikum"</span> immediately generates unmatched local guidance and complimentary cups of warm Kashmiri Chai!
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- TRAVEL ESSENTIALS & INTEGRATED BI-DIRECTIONAL CALCULATOR -->
+    <section class="py-24 bg-pak-ivory px-6 md:px-12 max-w-7xl mx-auto" id="essentials">
+      
+      <!-- Headers -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="inline-flex items-center space-x-2 bg-emerald-50 text-pak-green border border-emerald-250 px-3.5 py-1 rounded-full text-xs font-bold font-mono tracking-wider">
+          <i data-lucide="check-square" class="w-3.5 h-3.5 text-pak-green"></i>
+          <span>EXPLORER SADDLE-BAG PROTOCOLS</span>
+        </span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900 leading-tight">
+          Practical Travel <span class="text-pak-green font-normal italic">Essentials</span>
+        </h2>
+        <h3 id="essentials-title-ur" class="text-2xl sm:text-3xl font-urdu text-pak-gold leading-normal hidden">
+          پاکستان کے پُرلطف سفر کے لیے چند اہم معلومات اور اوزار
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-500 font-light">
+          Everything required before boarding: E-Visa links, regional mountain climate, currency exchanges, and cultural decorum guidelines.
+        </p>
+      </div>
+
+      <!-- Left Checklist vs Right Calculator -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Checklist info guides (Col 7) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Visa Info -->
+          <div class="bg-white border border-emerald-950/5 p-6 rounded-2xl flex gap-5 shadow-3xs hover:border-pak-gold/40 transition-all">
+            <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-100 shrink-0 h-12 flex items-center justify-center">
+              <i data-lucide="globe-2" class="w-6 h-6 text-pak-green"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h5 class="font-serif font-bold text-gray-950 text-sm md:text-base">1. Modern E-Visa System in Minutes</h5>
+              <p class="text-xs text-gray-550 leading-relaxed font-light">
+                Getting into Pakistan is extremely modern. Over 175 countries can apply for an <strong>Online E-Visa Web Portal</strong>, with normal outcomes approved within days. Travelers from 50+ countries gets an immediate Visa on Arrival at the border checkpoints. Reference official NADRA guidelines via <a href="https://visa.nadra.gov.pk" target="_blank" rel="noopener noreferrer" class="text-pak-green font-bold underline hover:text-pak-dark">Official Visa Portal</a>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Climate advice -->
+          <div class="bg-white border border-emerald-950/5 p-6 rounded-2xl flex gap-5 shadow-3xs hover:border-pak-gold/40 transition-all">
+            <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-100 shrink-0 h-12 flex items-center justify-center">
+              <i data-lucide="cloud-sun" class="w-6 h-6 text-pak-green animate-spin-slow"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h5 class="font-serif font-bold text-gray-950 text-sm md:text-base">2. Deciding Your Travel Seasons</h5>
+              <p class="text-xs text-gray-550 leading-relaxed font-light">
+                Due to staggering geography elevation, we highly recommend splitting priorities:
+              </p>
+              <ul class="list-disc list-inside text-xs text-gray-400 pl-1 space-y-1 font-light">
+                <li><strong class="text-gray-700">June to September:</strong> Ideal for alpine highlands, Fairy Meadows trekking routes, Chilas, and Naran roads.</li>
+                <li><strong class="text-gray-700">October to March:</strong> Ideal for Lahore Fort walking tours, Karachi coastal beach drives, and ancient Sindh tours.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Decorum and dressing -->
+          <div class="bg-white border border-emerald-950/5 p-6 rounded-2xl flex gap-5 shadow-3xs hover:border-pak-gold/40 transition-all">
+            <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-100 shrink-0 h-12 flex items-center justify-center">
+              <i data-lucide="shield-alert" class="w-6 h-6 text-pak-green"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h5 class="font-serif font-bold text-gray-950 text-sm md:text-base">3. Respecting Boundaries & Cash Advice</h5>
+              <p class="text-xs text-gray-550 leading-relaxed font-light">
+                While Pakistanis welcome global tourists with immense luxury treatments, carrying a scarf when visiting mosques or shrines represents absolute respect. Modest packing for public paths is advised. Carrying local cash (Pakistan Rupees) is key when roaming outside larger cities.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Dynamic Currency converter dashboard layout (Col 5) -->
+        <div class="lg:col-span-5 bg-emerald-950 text-white p-8 rounded-3xl border border-emerald-900 shadow-2xl space-y-6">
+          <div class="space-y-1.5">
+            <div class="text-pak-gold flex items-center space-x-2">
+              <i data-lucide="wallet" class="w-5 h-5 text-pak-gold"></i>
+              <span class="text-[9px] uppercase font-mono tracking-widest font-bold text-emerald-300">ESTIMATION DESK CALCULATOR</span>
+            </div>
+            <h5 class="font-serif font-bold text-lg text-white">PKR Exchange Calculator</h5>
+            <p class="text-xs text-emerald-200/80 leading-relaxed font-light">
+              Compute custom currency calculations below to appreciate the amazing buying potential of your budget in Pakistan.
+            </p>
+          </div>
+
+          <!-- Numeric Fields inputs -->
+          <div class="space-y-4">
+            <div class="space-y-1">
+              <label for="currency-amount" class="text-[9px] font-mono tracking-widest uppercase text-emerald-300 font-bold block">
+                Enter Amount:
+              </label>
+              <input
+                type="number"
+                id="currency-amount"
+                value="100"
+                min="1"
+                class="w-full bg-emerald-900/60 border border-emerald-800 p-3 rounded-xl text-lg font-bold font-sans text-white focus:outline-none focus:ring-1 focus:ring-pak-gold transition-all"
+                oninput="calculateExchange()"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label for="currency-select" class="text-[9px] font-mono tracking-widest uppercase text-emerald-300 font-bold block">
+                Select Currency:
+              </label>
+              <select
+                id="currency-select"
+                class="w-full bg-emerald-900/65 border border-emerald-800 p-3 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-1 focus:ring-pak-gold cursor-pointer"
+                onchange="calculateExchange()"
+              >
+                <option value="USD">USD — US Dollar ($)</option>
+                <option value="EUR">EUR — Euro (€)</option>
+                <option value="GBP">GBP — British Pound (£)</option>
+                <option value="CAD">CAD — Canadian Dollar (C$)</option>
+                <option value="AED">AED — United Arab Emirates Dirham (د.إ)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Animated Calculated box outputs -->
+          <div class="bg-emerald-900/35 border border-emerald-800/60 p-5 rounded-2xl text-center space-y-1">
+            <span class="text-[9px] font-mono uppercase tracking-widest text-[#a1b8aa]">Approximate Pakistani Rupees (PKR):</span>
+            <div id="currency-output" class="text-3xl font-black text-pak-gold font-sans">
+              ₨ 27,840.0 <span class="text-base text-white tracking-tight font-medium">PKR</span>
+            </div>
+            <p id="conversion-rate-log" class="text-[9px] text-emerald-200/60 font-mono italic">
+              Estimated scale rate: 1 USD = ~278.4 PKR
+            </p>
+          </div>
+
+          <p class="text-[10px] text-center text-emerald-200/70 italic leading-relaxed">
+            "Your spending goes extremely far. Expect high-end resort meals, tour guards, and travel setups to represent unmatched bargains!"
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- DETAILED SIGHTSEEING MODAL POPUPS DIALOG -->
+    <div id="places-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+      <!-- Backdrop blur overlay click to dismiss -->
+      <div class="absolute inset-0 bg-emerald-950/70 backdrop-blur-xs cursor-pointer" onclick="closePlacesModal()"></div>
+      
+      <!-- Modal body card box -->
+      <div class="relative bg-white rounded-3xl overflow-hidden max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl z-10 border border-white/20">
+        
+        <!-- Header background banner picture -->
+        <div class="relative h-60 md:h-72 shrink-0 select-none">
+          <img
+            id="modal-image"
+            src=""
+            alt=""
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          
+          <!-- Close cross button -->
+          <button
+            onclick="closePlacesModal()"
+            class="absolute right-4 top-4 bg-black/50 hover:bg-black/85 text-white border border-white/20 p-2 rounded-full transition-all hover:scale-105 active:scale-95"
+            aria-label="Close dialog"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Text block descriptions overlay -->
+          <div class="absolute bottom-6 left-6 right-6 flex flex-wrap justify-between items-end gap-3 text-white">
+            <div>
+              <span id="modal-province" class="bg-pak-gold text-emerald-950 font-mono text-[9px] uppercase font-black tracking-widest px-2.5 py-1 rounded-full mb-2 inline-block">
+                GILGIT-BALTISTAN
+              </span>
+              <h4 id="modal-title-en" class="text-xl md:text-3.5xl font-serif font-black tracking-tight leading-none">
+                Hunza Valley
+              </h4>
+            </div>
+            <div class="text-right">
+              <span id="modal-title-ur" class="font-urdu text-2xl md:text-3.5xl text-pak-gold font-bold pr-1 block leading-none">
+                وادیء ہنزہ
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scrollable segments -->
+        <div class="p-6 md:p-8 overflow-y-auto space-y-6">
+          
+          <!-- Side by side columns content -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-emerald-100/50">
+            
+            <!-- English context column -->
+            <div class="space-y-3">
+              <h5 class="text-[10px] uppercase tracking-widest font-bold text-pak-green font-mono flex items-center gap-1.5 pb-1 border-b border-emerald-50">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pak-gold"></i>
+                <span>About the Landmark</span>
+              </h5>
+              <p id="modal-desc-en" class="text-xs md:text-sm text-gray-550 leading-relaxed font-light">
+                Full-scale long descriptive analysis here...
+              </p>
+            </div>
+
+            <!-- Urdu context column -->
+            <div class="space-y-3 pt-6 md:pt-0 md:pl-8">
+              <h5 class="text-[10px] uppercase tracking-widest font-bold text-pak-green font-mono flex items-center gap-1.5 pb-1 border-b border-emerald-50 md:flex-row-reverse">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pak-gold"></i>
+                <span>تفصیلی معلومات</span>
+              </h5>
+              <p id="modal-desc-ur" class="urdu-text text-base leading-relaxed text-gray-700">
+                تفصیلی اردو رودادِ سفر معلومات یہاں شائع کی جائیگی
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="bg-pak-light p-5 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-6 border border-emerald-950/5 text-xs text-gray-700">
+            <div>
+              <span class="text-[9px] uppercase font-mono tracking-wider font-bold text-gray-400 block mb-1">Best Season</span>
+              <p id="modal-season" class="font-semibold text-gray-800">April to October</p>
+            </div>
+            <div>
+              <span class="text-[9px] uppercase font-mono tracking-wider font-bold text-gray-400 block mb-1">Permit & entry Fee</span>
+              <p id="modal-fee" class="font-semibold text-gray-800">Free entry for locals, Rs. 1000 for foreigners</p>
+            </div>
+            <div>
+              <span class="text-[9px] uppercase font-mono tracking-wider font-bold text-gray-400 block mb-1">Transit Route Info</span>
+              <p id="modal-travel" class="font-semibold text-gray-800">Accessible through KKH highway route</p>
+            </div>
+          </div>
+
+          <!-- Highlight list tags -->
+          <div class="space-y-3">
+            <h6 class="text-[9px] uppercase tracking-widest font-mono font-bold text-gray-400">Not-to-miss Highlights</h6>
+            <div class="flex flex-wrap gap-2" id="modal-highlights">
+              <!-- Rendered via script selection -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- FULL VISUAL FOOTER & INTEGRATION MANUAL -->
+    <footer class="bg-emerald-950 text-gray-300 pt-20 pb-10 border-t border-emerald-900 px-6 md:px-12">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <!-- Three core grids columns -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- Column A: Brand Info -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="flex items-center space-x-3">
+              <div class="bg-emerald-800/80 p-2 rounded-full border border-emerald-700 shadow-inner">
+                <i data-lucide="compass" class="w-5 h-5 text-pak-gold animate-spin-slow"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-bold tracking-tight font-serif text-base md:text-lg">
+                  Safar-e-Pakistan <span class="text-pak-gold font-normal">|</span> <span class="text-emerald-300 font-urdu text-sm leading-none pl-1">سفرِ پاکستان</span>
+                </h4>
+                <p class="text-[9px] text-gray-400 tracking-widest font-mono uppercase">Vanilla HTML/CSS/JS Travel Asset</p>
+              </div>
+            </div>
+            
+            <p class="text-xs text-gray-400 font-light leading-relaxed max-w-md">
+              A meticulously styled, fully-responsive digital tour directory crafted with zero-setup code so any student or explorer can immediately share this responsive experience live globally.
+            </p>
+          </div>
+
+          <!-- Column B: Quick navigation links -->
+          <div class="lg:col-span-3 space-y-4">
+            <h5 class="text-xs font-mono font-bold uppercase text-white tracking-widest">Interactive Directory</h5>
+            <ul class="text-xs space-y-3 font-light">
+              <li>
+                <a href="#home" class="hover:text-pak-gold transition-colors flex items-center space-x-2">
+                  <span>Overview Preambles</span> <span class="text-[9px] text-gray-500 font-urdu">| پیش لفظ</span>
+                </a>
+              </li>
+              <li>
+                <a href="#places" class="hover:text-pak-gold transition-colors flex items-center space-x-2">
+                  <span>Scenic Landscapes</span> <span class="text-[9px] text-gray-500 font-urdu">| مقامات</span>
+                </a>
+              </li>
+              <li>
+                <a href="#history" class="hover:text-pak-gold transition-colors flex items-center space-x-2">
+                  <span>Historic Chronicle Pages</span> <span class="text-[9px] text-gray-500 font-urdu">| تاریخ</span>
+                </a>
+              </li>
+              <li>
+                <a href="#planner" class="hover:text-pak-gold transition-colors flex items-center space-x-2">
+                  <span>Interactive Roadbook</span> <span class="text-[9px] text-gray-500 font-urdu">| سفر نامہ</span>
+                </a>
+              </li>
+              <li>
+                <a href="#culture" class="hover:text-pak-gold transition-colors flex items-center space-x-2">
+                  <span>Savor & Dialogue Flashcards</span> <span class="text-[9px] text-gray-500 font-urdu">| ثفاقت</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column C: User custom copy instructions for GitHub Pages -->
+          <div class="lg:col-span-4 bg-[#011e17] border border-emerald-900/60 p-6 rounded-2.5xl space-y-4">
+            <div class="flex items-center space-x-2 text-pak-gold">
+              <i data-lucide="github" class="w-5 h-5 text-white"></i>
+              <h5 class="text-xs font-mono font-black uppercase tracking-widest text-[#fafaf9]">GitHub Pages Publishing Guide</h5>
+            </div>
+            
+            <p class="text-xs text-gray-400 leading-relaxed font-light">
+              This webpage works natively on any free static static host! To publish these files on GitHub Pages:
+            </p>
+
+            <ul class="text-[11px] text-gray-450 list-decimal list-inside space-y-2 font-light leading-relaxed bg-black/25 p-4 rounded-xl border border-white/5">
+              <li>Upload <code class="text-emerald-300">index.html</code>, <code class="text-emerald-300">style.css</code>, <code class="text-emerald-300">script.js</code>, and the image directories to a new GitHub Repository.</li>
+              <li>Head into your repo’s <strong class="text-white font-medium">Settings &gt; Pages</strong> section.</li>
+              <li>Select your primary <strong class="text-white font-medium">Main / Master branch</strong> under Build and Deployment.</li>
+              <li>Click Save—your custom tourism directory will go live at <strong class="text-pak-gold font-light">https://&lt;username&gt;.github.io/&lt;repo&gt;</strong> instantly!</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Closing bottom block -->
+        <div class="border-t border-emerald-900/60 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+          <p>© 2026 Pakistan Tourism Matrix. Free vanilla open-source template resources.</p>
+          <div class="flex items-center space-x-2 text-gray-450">
+            <i data-lucide="smile" class="w-4 h-4 text-pak-gold select-none"></i>
+            <span class="font-light">Looking forward to welcoming you to Pakistan. <em class="text-emerald-400">Khushamdeed!</em></span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- Core backend JavaScript logic connection -->
+    <script src="script.js"></script>
+
   </body>
 </html>
-

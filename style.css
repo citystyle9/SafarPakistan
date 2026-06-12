@@ -1,0 +1,145 @@
+/* SAFAR-E-PAKISTAN CUSTOM EXCLUSIVE STYLE SHEETS
+   Adds bespoke animations, interactive flip states, typography tweaks for Urdu */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..850;1,200..850&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
+
+/* Dynamic smooth scroll and fine-grain optimization */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
+}
+
+/* Custom styles for Noto Nastaliq Urdu - Urdu script requires loose line-height to make sure beautiful swashes are not truncated! */
+.font-urdu, [lang="ur"] {
+  font-family: 'Noto Nastaliq Urdu', 'Playfair Display', serif;
+  line-height: 2.3 !important;
+  font-size: 105%;
+}
+
+/* Scrollbar customizations */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fcfbf7;
+}
+::-webkit-scrollbar-thumb {
+  background: #bbcbbe;
+  border-radius: 999px;
+  border: 2px solid #fcfbf7;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #005c30;
+}
+
+/* Premium Ken burns fade zoom style in Hero backdrop */
+@keyframes kenBurnsEffect {
+  0% {
+    transform: scale(1.02);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+.scale-102 {
+  animation: kenBurnsEffect 20s infinite ease-in-out;
+}
+
+/* Animation classes */
+.animate-spin-slow {
+  animation: spin 16s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Cards Hover Shadows and Elevation */
+.place-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.place-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 92, 48, 0.08), 0 10px 10px -5px rgba(0, 92, 48, 0.04);
+}
+
+/* 3D Flip Flashcards for Gourmet & Vocabulary Coach */
+.flip-card {
+  perspective: 1000px;
+  background-color: transparent;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+/* Double-click or click interactive state classes */
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 1.5rem;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Slide Nodes entry timings and indicators */
+.timeline-dot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background-color: #005c30;
+  border: 3px solid #fcfbf7;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(0, 92, 48, 0.3);
+}
+
+/* Dynamic slide animation entries */
+.slide-in-node {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideFadeIn 0.5s forwards ease-out;
+}
+
+@keyframes slideFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar elimination styles */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
